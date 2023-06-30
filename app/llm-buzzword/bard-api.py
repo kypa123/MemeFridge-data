@@ -13,11 +13,29 @@ session.headers = {
             "Origin": "https://bard.google.com",
             "Referer": "https://bard.google.com/",
         }
-
 session.cookies.set("__Secure-1PSID", os.getenv("_BARD_API_KEY"))
 
-bard = Bard(token=os.getenv("_BARD_API_KEY"), session=session, timeout=30)
-print(bard.get_answer("20대, 30대가 많이 사용할 것 같은, 현재 존재하지 않는 미래의 유행어가 뭐가 있을까? 완전히 새로운 단어를 말해줄래?")['content'])
-# print(answer)
-# Continued conversation without set new session
-print(bard.get_answer("What is my last prompt??")['content'])
+
+
+
+def getBuzzword():
+    bard = Bard(token=os.getenv("_BARD_API_KEY"), session=session, timeout=60)
+    answer = bard.get_answer("20대, 30대가 많이 사용할 것 같은, 현재 유행하고 있는 인터넷 유행어는 뭐가 있을까? 완전히 새로운 단어를 말해줄래?")['content'].split('\n')[1:-1]
+    while '' in answer:
+        answer.remove('')
+    for a in answer:
+        print(a)
+    return answer
+
+# getBuzzword()
+
+def predictBuzzword():
+    bard = Bard(token=os.getenv("_BARD_API_KEY"), session=session, timeout=60)
+    answer = bard.get_answer("20대, 30대가 사용할 것 같은, 현재는 존재하지 않는 완전히 새로운 유행어를 유추해줄래? 대통령의 이름같은 것들은 제외해줘")['content'].split('\n')[1:-1]
+    while '' in answer:
+        answer.remove('')
+    for a in answer:
+        print(a)
+    return answer
+
+# predictBuzzword()
