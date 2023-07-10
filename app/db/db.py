@@ -13,9 +13,21 @@ class PostgreSQL:
             self.cur = self.conn.cursor()
 
     def insertData(self, llm: str, datalist: list):
+        query = ''
         for data in datalist:
-            self.cur.execute(
-                f'insert into llm_buzzwords (name, descr, tags, llm) values ("{data.name}","{data.descr}","{data.tags}","{llm}")')
+            query += '('
+            query += f"'{data[0]}','{data[1]}','{data[2]}','{llm}'"
+            query += '),'
+        query = query[:-1]
+        try:
+            res = self.cur.execute(
+                f"insert into llm_buzzwords (name, descr, tags, llm) values {query} on conflict do nothing;")
+
+        except Exception as e:
+            return e
+        else:
+            self.conn.commit()
+            return 'ok'
 
     def getRecentData(self, lastid: int) -> list:
         self.cur.execute(f'select * from llm_buzzwords where id > {lastid}')
