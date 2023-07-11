@@ -2,19 +2,15 @@ from fastapi import APIRouter
 from app.controller.buzzword_controller import BuzzwordControllerInstance
 
 
-mainRouter = APIRouter()
+buzzwordRouter = APIRouter(prefix='/buzzword')
 
 
-@mainRouter.get('/')
-def hello():
-    return "hi!"
+
+@buzzwordRouter.get('')
+def getBuzzword(idx: int):
+    return BuzzwordControllerInstance.getRecentBuzzword(idx)
 
 
-@mainRouter.get('/buzzword', tags=['idx'])
-def getBuzzword():
-    return BuzzwordControllerInstance.getRecentBuzzword()
-
-
-@mainRouter.post('/buzzword')
+@buzzwordRouter.post('')
 def updateBuzzword():
     return BuzzwordControllerInstance.updateRecentBuzzword()
