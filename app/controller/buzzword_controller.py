@@ -8,8 +8,8 @@ class BuzzwordController:
         self.chatGPTInstance = chatgptinstance
         self.postgresInstance = postgresinstance
 
-    def getRecentBuzzword(self) -> list:
-        return self.postgresInstance.getRecentData()
+    def getRecentBuzzword(self, idx: int) -> list:
+        return self.postgresInstance.getRecentData(idx)
 
     def updateRecentBuzzword(self) -> any or Exception:
         try:
