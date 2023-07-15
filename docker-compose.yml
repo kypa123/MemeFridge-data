@@ -1,0 +1,30 @@
+version: "1"
+services:
+  api:
+    build:
+      context: .
+      dockerfile:
+        ./DockerFile
+    env_file:
+      - ./.env
+    ports:
+      - 8001:8000
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:13-alpine3.17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - /Users/wallcraft/Library/Application Support/Postgres/var-13:/var/lib/postgresql/data
+    hostname: postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-U", "postgres", "-d", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
