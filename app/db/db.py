@@ -2,11 +2,11 @@ import psycopg2
 
 
 class PostgreSQL:
-    def __init__(self, connectioninfo: str):
+    def __init__(self, connectioninfo: dict):
         self.connectionInfo = connectioninfo
 
         try:
-            self.conn = psycopg2.connect(self.connectionInfo)
+            self.conn = psycopg2.connect(**self.connectionInfo)
         except Exception as e:
             raise e
         else:

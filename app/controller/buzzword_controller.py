@@ -2,6 +2,7 @@ import os
 from app.llm_buzzword.chatGPT_api import ChatGPT
 from app.db.db import PostgreSQL
 import ast
+from urllib.parse import urlparse
 
 class BuzzwordController:
     def __init__(self, chatgptinstance: ChatGPT, postgresinstance: PostgreSQL):
@@ -35,7 +36,14 @@ class BuzzwordController:
         else:
             return 'ok'
 
-
-PostgresInstance = PostgreSQL(os.getenv('POSTGRES_CONNECTION'))
+p = urlparse(os.getenv('POSTGRES_CONNECTION'))
+pg_connection_dict = {
+    'dbname': p.hostname,
+    'user': p.username,
+    'password': p.password,
+    'port': p.port,
+    'host': p.scheme
+}
+PostgresInstance = PostgreSQL(pg_connection_dict)
 ChatGPTInstance = ChatGPT(os.getenv('OPENAI_API_KEY'))
 BuzzwordControllerInstance = BuzzwordController(ChatGPTInstance, PostgresInstance)
