@@ -21,7 +21,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - /Users/wallcraft/Library/Application Support/Postgres/var-13:/var/lib/postgresql/data
+      - /home/ubuntu/app/db/postgres/var-13:/var/lib/postgresql/data
     hostname: postgres
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-U", "postgres", "-d", "postgres" ]
