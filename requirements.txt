@@ -7,7 +7,7 @@ bardapi==0.1.24
 beautifulsoup4==4.12.2
 bs4==0.0.1
 cachetools==4.2.4
-certifi==2023.5.7
+certifi==2023.7.22
 charset-normalizer==3.1.0
 click==8.1.4
 colorama==0.4.6
